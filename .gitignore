@@ -1,0 +1,50 @@
+# CMake / JUCE
+/build/
+/cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+*.ninja
+.ninja_*
+
+# Native build artefacts
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.vst3/
+*.component/
+*.app/
+
+# JavaScript / Vite
+**/node_modules/
+**/dist/
+**/.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# IDEs and editors
+.idea/
+.vscode/
+*.user
+*.suo
+*.swp
+*.swo
+*~
+
+# Platform and local files
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
+**/.git.backup/
+
+# Test artefacts
+coverage/
+.nyc_output/

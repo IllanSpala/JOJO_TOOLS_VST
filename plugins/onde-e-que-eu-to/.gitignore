@@ -1,0 +1,14 @@
+# Generated frontend output
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Plugin-local build directories
+build/
+cmake-build-*/
+
+# Native artefacts
+*.a
+*.so
+*.vst3/
+*.log
