@@ -18,6 +18,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout OndeEQueEuToAudioProcessor::
 void OndeEQueEuToAudioProcessor::prepareToPlay (double sampleRate, int)
 {
     currentSampleRate.store (sampleRate);
+    stopRequested.store (false);
+    for (auto& voice : voices) voice = {};
+    for (auto& item : scheduled) item = {};
     mainGain.reset (sampleRate, 0.02);
     mainGain.setCurrentAndTargetValue (juce::Decibels::decibelsToGain (parameters.getRawParameterValue (mainOutputGainId)->load()));
 }
@@ -85,7 +88,7 @@ void OndeEQueEuToAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
             if (auto slot = std::find_if (scheduled.begin(), scheduled.end(), [] (const Scheduled& item) { return ! item.active; }); slot != scheduled.end()) *slot = { true, command };
         commandFifo.finishedRead (1);
     }
-    const auto synthGain = 0.18f * juce::Decibels::decibelsToGain (parameters.getRawParameterValue (notesOutputGainId)->load());
+    const auto synthGain = 0.24f * juce::Decibels::decibelsToGain (parameters.getRawParameterValue (notesOutputGainId)->load());
     const auto attack = juce::jmax (1, juce::roundToInt (0.01 * currentSampleRate.load()));
     const auto release = juce::jmax (1, juce::roundToInt (0.08 * currentSampleRate.load()));
     for (int sample = 0; sample < samples; ++sample)
@@ -96,7 +99,9 @@ void OndeEQueEuToAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         {
             if (! voice.active) continue;
             const auto envelope = voice.age < attack ? static_cast<float> (voice.age) / attack : voice.age > voice.duration - release ? static_cast<float> (voice.duration - voice.age) / release : 1.0f;
-            mixed += static_cast<float> (std::sin (voice.phase)) * juce::jlimit (0.0f, 1.0f, envelope) * synthGain;
+            const auto fundamental = static_cast<float> (std::sin (voice.phase));
+            const auto harmonic = 0.18f * static_cast<float> (std::sin (voice.phase * 2.0));
+            mixed += (fundamental + harmonic) * juce::jlimit (0.0f, 1.0f, envelope) * synthGain;
             voice.phase += voice.increment;
             if (++voice.age >= voice.duration) voice.active = false;
         }

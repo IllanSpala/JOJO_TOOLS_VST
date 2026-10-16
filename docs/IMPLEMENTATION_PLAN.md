@@ -14,7 +14,7 @@
 - [ ] Validar reconhecimento e operação no REAPER; o executável não está instalado neste ambiente.
 - [ ] Validar builds Windows e macOS em seus respectivos sistemas.
 
-Observação de metadados: o bundle e os macros nativos preservam o nome Unicode solicitado, mas o gerador de `moduleinfo.json` do JUCE 8.0.6 exibiu mojibake para `é/ô` no Linux. Isso deve ser conferido no navegador do REAPER antes da distribuição; o nome não foi silenciosamente transliterado.
+Observação de metadados: o bundle físico continua `OndeEQueEuTo.vst3`, enquanto o nome apresentado ao host é o texto ASCII `AINDA ESTOU POR AI`, evitando o problema de codificação observado anteriormente no manifesto do JUCE 8.0.6.
 
 ## Próximos testes
 

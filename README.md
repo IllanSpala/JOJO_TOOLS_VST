@@ -2,18 +2,18 @@
 
 **Dont pay, just play!**
 
-Monorepositório da coleção de plugins musicais **JOJO-TOOLS**. O primeiro produto é **Onde é que eu tô?**, um efeito educacional para explorar escalas e modos, visualizar notas no braço da guitarra ou do baixo e ouvir referências musicais no navegador, no aplicativo Standalone ou em uma DAW compatível com VST3.
+Monorepositório da coleção de plugins musicais **JOJO-TOOLS**. O primeiro produto é **AINDA ESTOU POR AI**, um efeito educacional para explorar escalas e modos, visualizar notas no braço da guitarra ou do baixo e ouvir referências musicais no navegador, no aplicativo Standalone ou em uma DAW compatível com VST3.
 
 **Repositório:** https://github.com/IllanSpala/JOJO_TOOLS_VST  
 **Desenvolvedor:** [IllanSpala](https://github.com/IllanSpala)
 
 > **Status:** o projeto possui implementação e artefatos nativos Linux descritos nesta documentação. A build Windows, a integração com WebView2 e o funcionamento em hosts Windows ainda precisam ser compilados e validados. Não há instalador Windows ou binário Windows confirmado neste repositório.
 
-## Primeiro plugin — Onde é que eu tô?
+## Primeiro plugin — AINDA ESTOU POR AI
 
 | Campo | Valor |
 |---|---|
-| Nome comercial | **Onde é que eu tô?** |
+| Nome comercial | **AINDA ESTOU POR AI** |
 | Fabricante | **JOJO-TOOLS** |
 | Versão nativa | `0.1.0` |
 | Versão de desenvolvimento | `0.1.0-dev` |
@@ -23,7 +23,7 @@ Monorepositório da coleção de plugins musicais **JOJO-TOOLS**. O primeiro pro
 | Plugin Code | `Oeqt` |
 | Categoria | `VST3 Fx` |
 
-O header do frontend continua exibindo **MÁQUINA DE ESCALAS**; **Onde é que eu tô?** é o nome do produto no modal e nos metadados. O nome físico do bundle não contém `?`, caractere incompatível com nomes de arquivos do Windows.
+O header do frontend continua exibindo **MÁQUINA DE ESCALAS**; **AINDA ESTOU POR AI** é o nome do produto no modal e nos metadados. O nome físico do bundle não contém `?`, caractere incompatível com nomes de arquivos do Windows.
 
 ### Funcionalidades implementadas no projeto Linux
 
@@ -290,7 +290,7 @@ Execute o `.exe` Standalone primeiro para verificar a renderização e o áudio.
 1. Abra **Options → Preferences → Plug-ins → VST**.
 2. Confirme que o diretório de instalação VST3 está entre os caminhos que o REAPER pesquisa.
 3. Execute **Re-scan**; se necessário, use uma varredura completa do cache.
-4. No navegador de efeitos, procure **Onde é que eu tô?** ou **JOJO-TOOLS**. Se o nome estiver incorreto, consulte as limitações de Unicode abaixo.
+4. No navegador de efeitos, procure **AINDA ESTOU POR AI** ou **JOJO-TOOLS**. Se ainda aparecer o nome antigo, limpe o cache VST e execute uma varredura completa.
 5. Insira o plugin numa trilha com áudio de guitarra/baixo ou material gravado.
 6. Verifique passagem de áudio mono e estéreo.
 7. Teste `OUTPUT` e `NOTES OUTPUT` separadamente.
@@ -386,7 +386,7 @@ Antes de qualquer commit, confira `git status` e evite incluir `build/`, `node_m
 - A implementação nativa e os artefatos relatados até aqui são do **Linux**; o REAPER ainda precisa de validação em host real conforme os testes previstos.
 - **Windows:** WebView2 requer ajustes no CMake e no `PluginEditor.cpp`, seguidos de compilação e validação. Não há `.vst3` Windows validado nesta documentação.
 - **Windows:** é necessário verificar a presença do WebView2 Runtime nas máquinas dos usuários e distribuir suas dependências corretamente.
-- O helper de manifesto JUCE 8.0.6 apresentou caracteres incorretos (*mojibake*) para `é` e `ô` em `moduleinfo.json`. Conferir o nome do plugin exibido pelo REAPER antes de publicar releases.
+- O nome apresentado ao host foi limitado a ASCII (`AINDA ESTOU POR AI`) para evitar diferenças de codificação entre o JUCE, o manifesto VST3 e diferentes hosts.
 - O Standalone Linux requer sessão gráfica GTK válida.
 - macOS ainda não foi compilado nem validado.
 - O Treino do Braço está preservado no código, mas não é acessível na interface atual.

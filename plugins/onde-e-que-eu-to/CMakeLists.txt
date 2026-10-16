@@ -21,16 +21,16 @@ juce_add_plugin(${JOJO_PLUGIN_TARGET}
   VERSION 0.1.0
   FORMATS VST3 Standalone
   PRODUCT_NAME "OndeEQueEuTo"
-  PLUGIN_NAME "Onde é que eu tô?"
+  PLUGIN_NAME "AINDA ESTOU POR AI"
   DESCRIPTION "Ferramenta educacional de escalas e braço de instrumentos"
-  IS_SYNTH FALSE
+  IS_SYNTH TRUE
   NEEDS_MIDI_INPUT FALSE
   NEEDS_MIDI_OUTPUT FALSE
   IS_MIDI_EFFECT FALSE
   NEEDS_WEB_BROWSER TRUE
   EDITOR_WANTS_KEYBOARD_FOCUS TRUE
   COPY_PLUGIN_AFTER_BUILD FALSE
-  VST3_CATEGORIES Fx)
+  VST3_CATEGORIES Instrument Fx)
 
 juce_add_binary_data(OndeEQueEuToFrontend SOURCES ${JOJO_FRONTEND_ASSETS})
 target_sources(${JOJO_PLUGIN_TARGET} PRIVATE plugin/PluginProcessor.h plugin/PluginProcessor.cpp plugin/PluginEditor.h plugin/PluginEditor.cpp)

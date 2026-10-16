@@ -6,5 +6,5 @@
 - The initial editor design size is 1600 x 900. The primary fretboard must fit seven strings and 24 frets without scrollbars.
 - Keep musical logic independent from React and JUCE UI code. Browser development uses `MockBridge`; the plugin uses `JuceBridge`.
 - Never call a WebView or allocate/block from the audio thread. UI-to-audio reference notes use the fixed-capacity command FIFO.
-- Keep physical artifact names Windows-safe. The first product target/bundle is `OndeEQueEuTo`; its host-facing name remains `Onde é que eu tô?`.
+- Keep physical artifact names Windows-safe. The first product target/bundle is `OndeEQueEuTo`; its host-facing name is `AINDA ESTOU POR AI`.
 - A Windows/REAPER build is not validated until it is actually built and run there.

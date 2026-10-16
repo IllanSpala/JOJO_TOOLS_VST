@@ -1,6 +1,6 @@
-# Onde é que eu tô?
+# AINDA ESTOU POR AI
 
-Primeiro plugin da suíte JOJO-TOOLS. O header da interface identifica a função **MÁQUINA DE ESCALAS**; o modal e os metadados nativos identificam o produto **Onde é que eu tô?**.
+Primeiro plugin da suíte JOJO-TOOLS. O header da interface identifica a função **MÁQUINA DE ESCALAS**; o modal e os metadados nativos identificam o produto **AINDA ESTOU POR AI**.
 
 ## Desenvolvimento web
 
@@ -22,6 +22,6 @@ O build normal é offline em runtime: a interface Vite é incorporada ao binári
 
 ## REAPER Linux
 
-Execute `./scripts/install-linux-vst3.sh`. No REAPER, adicione `~/.vst3` aos caminhos VST se necessário e faça um rescan. Procure por **Onde é que eu tô?**, fabricante **JOJO-TOOLS**. Teste áudio mono/estéreo, automação de `Output` e `Notes Output`, salvamento da sessão e reprodução das referências.
+Execute `./scripts/install-linux-vst3.sh`. No REAPER, adicione `~/.vst3` aos caminhos VST se necessário e faça um rescan. Procure por **AINDA ESTOU POR AI**, fabricante **JOJO-TOOLS**. Teste áudio mono/estéreo, automação de `Output` e `Notes Output`, salvamento da sessão e reprodução das referências.
 
 O ganho positivo pode clipar; use material com headroom. Não há limiter por decisão de escopo.

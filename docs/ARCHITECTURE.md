@@ -8,9 +8,9 @@
 - `scripts/`: build, execução e instalação local.
 - `build/linux/`: dependências e artefatos gerados, nunca versionados.
 
-## Onde é que eu tô?
+## AINDA ESTOU POR AI
 
-O target interno é `OndeEQueEuTo`, o bundle físico é `OndeEQueEuTo.vst3` e o nome apresentado ao host é `Onde é que eu tô?`. Fabricante `JOJO-TOOLS`, versão nativa `0.1.0`, manufacturer code `Jotl` e plugin code `Oeqt`.
+O target interno é `OndeEQueEuTo`, o bundle físico é `OndeEQueEuTo.vst3` e o nome apresentado ao host é `AINDA ESTOU POR AI`. Fabricante `JOJO-TOOLS`, versão nativa `0.1.0`, manufacturer code `Jotl` e plugin code `Oeqt`.
 
 O `AudioProcessor` aceita layouts mono→mono e estéreo→estéreo. Primeiro aplica `mainOutputGain` ao sinal recebido e, em seguida, mistura as vozes de referência. Assim, a síntese não substitui o áudio real da DAW. Os comandos de notas chegam por um FIFO de capacidade fixa e nenhuma WebView é acessada pela thread de áudio.
 

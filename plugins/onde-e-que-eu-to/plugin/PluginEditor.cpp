@@ -20,8 +20,8 @@ OndeEQueEuToAudioProcessorEditor::OndeEQueEuToAudioProcessorEditor (OndeEQueEuTo
 {
     addAndMakeVisible (browser);
     setResizable (true, true);
-    setResizeLimits (1000, 640, 1920, 1080);
-    setSize (1600, 900);
+    setResizeLimits (960, 540, 3840, 2160);
+    setSize (1376, 774);
 #if JOJO_USE_VITE_DEV_SERVER
     browser.goToURL ("http://localhost:5173");
 #else
@@ -39,11 +39,19 @@ juce::WebBrowserComponent::Options OndeEQueEuToAudioProcessorEditor::makeBrowser
         .withEventListener ("setParameter", [this] (const juce::var& payload) { setParameterFromWeb (payload); })
         .withEventListener ("playNote", [this] (const juce::var& payload)
         {
-            if (auto* object = payload.getDynamicObject()) processor.triggerNote (static_cast<int> (object->getProperty ("midi")), static_cast<float> (object->getProperty ("duration")));
+            if (auto* object = payload.getDynamicObject())
+            {
+                processor.triggerNote (static_cast<int> (object->getProperty ("midi")), static_cast<float> (object->getProperty ("duration")));
+                processor.updateHostDisplay();
+            }
         })
         .withEventListener ("playScale", [this] (const juce::var& payload)
         {
-            if (auto* object = payload.getDynamicObject()) if (auto* notes = object->getProperty ("midis").getArray()) processor.triggerScale (*notes);
+            if (auto* object = payload.getDynamicObject()) if (auto* notes = object->getProperty ("midis").getArray())
+            {
+                processor.triggerScale (*notes);
+                processor.updateHostDisplay();
+            }
         })
         .withEventListener ("stopNotes", [this] (const juce::var&) { processor.stopReferenceNotes(); })
         .withEventListener ("openExternalUrl", [] (const juce::var& payload)
