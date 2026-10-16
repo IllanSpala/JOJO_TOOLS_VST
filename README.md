@@ -2,28 +2,29 @@
 
 **Dont pay, just play!**
 
-Monorepositório da coleção de plugins musicais **JOJO-TOOLS**. O primeiro produto é **AINDA ESTOU POR AI**, um efeito educacional para explorar escalas e modos, visualizar notas no braço da guitarra ou do baixo e ouvir referências musicais no navegador, no aplicativo Standalone ou em uma DAW compatível com VST3.
+Monorepositório da coleção de plugins musicais **JOJO-TOOLS**. O primeiro produto é **SeEncontre**, um efeito educacional para explorar escalas e modos, visualizar notas no braço da guitarra ou do baixo e ouvir referências musicais no navegador, no aplicativo Standalone ou em uma DAW compatível com VST3.
 
 **Repositório:** https://github.com/IllanSpala/JOJO_TOOLS_VST  
 **Desenvolvedor:** [IllanSpala](https://github.com/IllanSpala)
 
 > **Status:** o projeto possui implementação e artefatos nativos Linux descritos nesta documentação. A build Windows, a integração com WebView2 e o funcionamento em hosts Windows ainda precisam ser compilados e validados. Não há instalador Windows ou binário Windows confirmado neste repositório.
 
-## Primeiro plugin — AINDA ESTOU POR AI
+## Primeiro plugin — SeEncontre
 
 | Campo | Valor |
 |---|---|
-| Nome comercial | **AINDA ESTOU POR AI** |
 | Fabricante | **JOJO-TOOLS** |
 | Versão nativa | `0.1.0` |
 | Versão de desenvolvimento | `0.1.0-dev` |
-| Target CMake | `OndeEQueEuTo` |
-| Bundle físico | `OndeEQueEuTo.vst3` |
+| Target CMake | `SeEncontre` |
+| Bundle físico | `SeEncontre.vst3` |
 | Manufacturer Code | `Jotl` |
 | Plugin Code | `Oeqt` |
-| Categoria | `VST3 Fx` |
+| Categoria | `VST3 Instrument / Fx` |
 
-O header do frontend continua exibindo **MÁQUINA DE ESCALAS**; **AINDA ESTOU POR AI** é o nome do produto no modal e nos metadados. O nome físico do bundle não contém `?`, caractere incompatível com nomes de arquivos do Windows.
+O header do frontend continua exibindo **MÁQUINA DE ESCALAS**; **SeEncontre** é o nome do produto no modal, no host, no target CMake e nos metadados. O bundle físico é `SeEncontre.vst3`.
+
+Na atualização Linux, o instalador preserva o bundle antigo em `jojo-tools-vst-backups`, ao lado da pasta de instalação VST3, evitando duas cópias do mesmo plugin na varredura. Reinicie o REAPER e atualize o cache VST para exibir o novo nome. Os identificadores VST3 foram mantidos para preservar a identidade do plugin nos projetos existentes.
 
 ### Funcionalidades implementadas no projeto Linux
 
@@ -76,7 +77,7 @@ cd ~/Documentos/Coding/JOJO_TOOLS_VST
 O script usa, por padrão:
 
 ```text
-~/.vst3/OndeEQueEuTo.vst3/
+~/.vst3/SeEncontre.vst3/
 ```
 
 Para um destino alternativo:
@@ -109,9 +110,9 @@ O CMake usa **JUCE 8.0.6** fixado por `FetchContent`; a primeira configuração 
 Artefatos Debug esperados:
 
 ```text
-build/linux/plugins/onde-e-que-eu-to/OndeEQueEuTo_artefacts/Debug/
-├── Standalone/OndeEQueEuTo
-└── VST3/OndeEQueEuTo.vst3/
+build/linux/plugins/onde-e-que-eu-to/SeEncontre_artefacts/Debug/
+├── Standalone/SeEncontre
+└── VST3/SeEncontre.vst3/
 ```
 
 Execute o Standalone numa sessão gráfica Linux:
@@ -148,13 +149,13 @@ Nesta modalidade de desenvolvimento, mantenha `npm run dev` ativo. O build norma
 ### Requisitos para executar
 
 - Windows 10/11 x64 e DAW com suporte a VST3 (por exemplo, REAPER x64).
-- Bundle **Windows x64** `OndeEQueEuTo.vst3`, contendo os binários internos gerados para Windows.
+- Bundle **Windows x64** `SeEncontre.vst3`, contendo os binários internos gerados para Windows.
 - **Microsoft Edge WebView2 Runtime** instalado, se a versão Windows utilizar o backend WebView2 (recomendado para renderizar o React). Verifique em **Aplicativos instalados**; se necessário, obtenha-o em https://developer.microsoft.com/microsoft-edge/webview2/.
 
 ### Instalação para o usuário atual (sem administrador)
 
 1. Feche o REAPER.
-2. Obtenha o bundle `OndeEQueEuTo.vst3` **compilado para Windows**.
+2. Obtenha o bundle `SeEncontre.vst3` **compilado para Windows**.
 3. Pressione `Win + R`, cole o caminho abaixo e confirme:
 
    ```text
@@ -162,13 +163,13 @@ Nesta modalidade de desenvolvimento, mantenha `npm run dev` ativo. O build norma
    ```
 
 4. Crie a pasta se ela não existir.
-5. Copie **a pasta `OndeEQueEuTo.vst3` inteira** para esse diretório, preservando `Contents` e seus arquivos internos.
+5. Copie **a pasta `SeEncontre.vst3` inteira** para esse diretório, preservando `Contents` e seus arquivos internos.
 6. Inicie o REAPER e faça uma nova varredura VST3.
 
 O destino resultante deverá ser semelhante a:
 
 ```text
-C:\Users\SEU_USUARIO\AppData\Local\Programs\Common\VST3\OndeEQueEuTo.vst3\
+C:\Users\SEU_USUARIO\AppData\Local\Programs\Common\VST3\SeEncontre.vst3\
 ```
 
 ### Instalação global (todos os usuários)
@@ -188,7 +189,7 @@ Essa instalação normalmente exige permissão de administrador. Não instale o 
 Se você estiver no diretório raiz do projeto **e já possuir um bundle Windows compilado**, use:
 
 ```powershell
-$bundle = '.\build\windows\plugins\onde-e-que-eu-to\OndeEQueEuTo_artefacts\Release\VST3\OndeEQueEuTo.vst3'
+$bundle = '.\build\windows\plugins\onde-e-que-eu-to\SeEncontre_artefacts\Release\VST3\SeEncontre.vst3'
 $destino = Join-Path $env:LOCALAPPDATA 'Programs\Common\VST3'
 
 if (-not (Test-Path -LiteralPath $bundle -PathType Container)) {
@@ -197,7 +198,7 @@ if (-not (Test-Path -LiteralPath $bundle -PathType Container)) {
 
 New-Item -ItemType Directory -Force -Path $destino | Out-Null
 
-if (Test-Path -LiteralPath (Join-Path $destino 'OndeEQueEuTo.vst3')) {
+if (Test-Path -LiteralPath (Join-Path $destino 'SeEncontre.vst3')) {
     throw 'Já existe uma instalação. Feche a DAW e faça backup antes de substituir.'
 }
 
@@ -270,15 +271,15 @@ O Visual Studio utiliza gerador *multi-config*: selecione `Release` no comando d
 
 ```powershell
 Get-ChildItem .\build\windows -Recurse -Filter '*.vst3'
-Get-ChildItem .\build\windows -Recurse -Filter 'OndeEQueEuTo.exe'
+Get-ChildItem .\build\windows -Recurse -Filter 'SeEncontre.exe'
 ```
 
 Diretório esperado (confirmar após compilar):
 
 ```text
-build\windows\plugins\onde-e-que-eu-to\OndeEQueEuTo_artefacts\Release\
-├── Standalone\OndeEQueEuTo.exe
-└── VST3\OndeEQueEuTo.vst3\
+build\windows\plugins\onde-e-que-eu-to\SeEncontre_artefacts\Release\
+├── Standalone\SeEncontre.exe
+└── VST3\SeEncontre.vst3\
 ```
 
 Execute o `.exe` Standalone primeiro para verificar a renderização e o áudio. Depois instale a pasta `.vst3` seguindo a seção **Instalação rápida — Windows** e teste no REAPER.
@@ -290,7 +291,7 @@ Execute o `.exe` Standalone primeiro para verificar a renderização e o áudio.
 1. Abra **Options → Preferences → Plug-ins → VST**.
 2. Confirme que o diretório de instalação VST3 está entre os caminhos que o REAPER pesquisa.
 3. Execute **Re-scan**; se necessário, use uma varredura completa do cache.
-4. No navegador de efeitos, procure **AINDA ESTOU POR AI** ou **JOJO-TOOLS**. Se ainda aparecer o nome antigo, limpe o cache VST e execute uma varredura completa.
+4. No navegador de efeitos, procure **SeEncontre** ou **JOJO-TOOLS**. Se ainda aparecer o nome antigo, limpe o cache VST e execute uma varredura completa.
 5. Insira o plugin numa trilha com áudio de guitarra/baixo ou material gravado.
 6. Verifique passagem de áudio mono e estéreo.
 7. Teste `OUTPUT` e `NOTES OUTPUT` separadamente.
@@ -386,7 +387,7 @@ Antes de qualquer commit, confira `git status` e evite incluir `build/`, `node_m
 - A implementação nativa e os artefatos relatados até aqui são do **Linux**; o REAPER ainda precisa de validação em host real conforme os testes previstos.
 - **Windows:** WebView2 requer ajustes no CMake e no `PluginEditor.cpp`, seguidos de compilação e validação. Não há `.vst3` Windows validado nesta documentação.
 - **Windows:** é necessário verificar a presença do WebView2 Runtime nas máquinas dos usuários e distribuir suas dependências corretamente.
-- O nome apresentado ao host foi limitado a ASCII (`AINDA ESTOU POR AI`) para evitar diferenças de codificação entre o JUCE, o manifesto VST3 e diferentes hosts.
+- O nome apresentado ao host foi limitado a ASCII (`SeEncontre`) para evitar diferenças de codificação entre o JUCE, o manifesto VST3 e diferentes hosts.
 - O Standalone Linux requer sessão gráfica GTK válida.
 - macOS ainda não foi compilado nem validado.
 - O Treino do Braço está preservado no código, mas não é acessível na interface atual.

@@ -1,12 +1,12 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-OndeEQueEuToAudioProcessor::OndeEQueEuToAudioProcessor()
+SeEncontreAudioProcessor::SeEncontreAudioProcessor()
     : AudioProcessor (BusesProperties().withInput ("Input", juce::AudioChannelSet::stereo(), true)
                                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)),
       parameters (*this, nullptr, "PARAMETERS", createParameterLayout()) {}
 
-juce::AudioProcessorValueTreeState::ParameterLayout OndeEQueEuToAudioProcessor::createParameterLayout()
+juce::AudioProcessorValueTreeState::ParameterLayout SeEncontreAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     const juce::NormalisableRange<float> range { -12.0f, 12.0f, 0.1f };
@@ -15,7 +15,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout OndeEQueEuToAudioProcessor::
     return layout;
 }
 
-void OndeEQueEuToAudioProcessor::prepareToPlay (double sampleRate, int)
+void SeEncontreAudioProcessor::prepareToPlay (double sampleRate, int)
 {
     currentSampleRate.store (sampleRate);
     stopRequested.store (false);
@@ -25,16 +25,16 @@ void OndeEQueEuToAudioProcessor::prepareToPlay (double sampleRate, int)
     mainGain.setCurrentAndTargetValue (juce::Decibels::decibelsToGain (parameters.getRawParameterValue (mainOutputGainId)->load()));
 }
 
-void OndeEQueEuToAudioProcessor::releaseResources() { stopReferenceNotes(); }
+void SeEncontreAudioProcessor::releaseResources() { stopReferenceNotes(); }
 
-bool OndeEQueEuToAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool SeEncontreAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
     const auto input = layouts.getMainInputChannelSet();
     const auto output = layouts.getMainOutputChannelSet();
     return (input == juce::AudioChannelSet::mono() || input == juce::AudioChannelSet::stereo()) && input == output;
 }
 
-void OndeEQueEuToAudioProcessor::triggerNote (int midiNote, float durationSeconds, double delaySeconds)
+void SeEncontreAudioProcessor::triggerNote (int midiNote, float durationSeconds, double delaySeconds)
 {
     const auto rate = currentSampleRate.load();
     const NoteCommand command { juce::jlimit (0, 127, midiNote), juce::jmax (0, juce::roundToInt (delaySeconds * rate)), juce::jmax (1, juce::roundToInt (durationSeconds * rate)), noteGeneration.load() };
@@ -44,15 +44,15 @@ void OndeEQueEuToAudioProcessor::triggerNote (int midiNote, float durationSecond
     commandFifo.finishedWrite (size1);
 }
 
-void OndeEQueEuToAudioProcessor::triggerScale (const juce::Array<juce::var>& midiNotes)
+void SeEncontreAudioProcessor::triggerScale (const juce::Array<juce::var>& midiNotes)
 {
     stopReferenceNotes();
     for (int index = 0; index < midiNotes.size(); ++index) triggerNote (static_cast<int> (midiNotes[index]), 0.55f, index * 0.42);
 }
 
-void OndeEQueEuToAudioProcessor::stopReferenceNotes() { noteGeneration.fetch_add (1); stopRequested.store (true); }
+void SeEncontreAudioProcessor::stopReferenceNotes() { noteGeneration.fetch_add (1); stopRequested.store (true); }
 
-void OndeEQueEuToAudioProcessor::startVoice (const NoteCommand& command)
+void SeEncontreAudioProcessor::startVoice (const NoteCommand& command)
 {
     auto voice = std::find_if (voices.begin(), voices.end(), [] (const Voice& candidate) { return ! candidate.active; });
     if (voice == voices.end()) voice = voices.begin();
@@ -63,7 +63,7 @@ void OndeEQueEuToAudioProcessor::startVoice (const NoteCommand& command)
     voice->duration = command.durationSamples;
 }
 
-void OndeEQueEuToAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&)
+void SeEncontreAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&)
 {
     juce::ScopedNoDenormals noDenormals;
     const auto channels = buffer.getNumChannels(), samples = buffer.getNumSamples();
@@ -109,16 +109,16 @@ void OndeEQueEuToAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     }
 }
 
-void OndeEQueEuToAudioProcessor::getStateInformation (juce::MemoryBlock& destination)
+void SeEncontreAudioProcessor::getStateInformation (juce::MemoryBlock& destination)
 {
     if (auto xml = parameters.copyState().createXml()) copyXmlToBinary (*xml, destination);
 }
 
-void OndeEQueEuToAudioProcessor::setStateInformation (const void* data, int size)
+void SeEncontreAudioProcessor::setStateInformation (const void* data, int size)
 {
     if (auto xml = getXmlFromBinary (data, size); xml != nullptr)
         if (xml->hasTagName (parameters.state.getType())) parameters.replaceState (juce::ValueTree::fromXml (*xml));
 }
 
-juce::AudioProcessorEditor* OndeEQueEuToAudioProcessor::createEditor() { return new OndeEQueEuToAudioProcessorEditor (*this); }
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new OndeEQueEuToAudioProcessor(); }
+juce::AudioProcessorEditor* SeEncontreAudioProcessor::createEditor() { return new SeEncontreAudioProcessorEditor (*this); }
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new SeEncontreAudioProcessor(); }

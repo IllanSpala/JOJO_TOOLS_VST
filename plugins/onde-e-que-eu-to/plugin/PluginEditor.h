@@ -3,11 +3,11 @@
 #include <juce_gui_extra/juce_gui_extra.h>
 #include "PluginProcessor.h"
 
-class OndeEQueEuToAudioProcessorEditor final : public juce::AudioProcessorEditor, private juce::Timer
+class SeEncontreAudioProcessorEditor final : public juce::AudioProcessorEditor, private juce::Timer
 {
 public:
-    explicit OndeEQueEuToAudioProcessorEditor (OndeEQueEuToAudioProcessor&);
-    ~OndeEQueEuToAudioProcessorEditor() override = default;
+    explicit SeEncontreAudioProcessorEditor (SeEncontreAudioProcessor&);
+    ~SeEncontreAudioProcessorEditor() override = default;
     void resized() override;
 
 private:
@@ -16,9 +16,9 @@ private:
     std::optional<Resource> getResource (const juce::String& url) const;
     void timerCallback() override;
     void setParameterFromWeb (const juce::var& payload);
-    OndeEQueEuToAudioProcessor& processor;
+    SeEncontreAudioProcessor& processor;
     juce::WebBrowserComponent browser;
     float lastNotesGain = std::numeric_limits<float>::quiet_NaN();
     float lastMainGain = std::numeric_limits<float>::quiet_NaN();
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OndeEQueEuToAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SeEncontreAudioProcessorEditor)
 };

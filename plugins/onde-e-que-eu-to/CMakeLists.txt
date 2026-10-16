@@ -1,4 +1,4 @@
-set(JOJO_PLUGIN_TARGET OndeEQueEuTo)
+set(JOJO_PLUGIN_TARGET SeEncontre)
 set(JOJO_FRONTEND_DIR "${CMAKE_CURRENT_SOURCE_DIR}/frontend")
 set(JOJO_FRONTEND_DIST "${JOJO_FRONTEND_DIR}/dist")
 option(JOJO_USE_VITE_DEV_SERVER "Load http://localhost:5173 instead of embedded assets" OFF)
@@ -20,8 +20,8 @@ juce_add_plugin(${JOJO_PLUGIN_TARGET}
   PLUGIN_CODE Oeqt
   VERSION 0.1.0
   FORMATS VST3 Standalone
-  PRODUCT_NAME "OndeEQueEuTo"
-  PLUGIN_NAME "AINDA ESTOU POR AI"
+  PRODUCT_NAME "SeEncontre"
+  PLUGIN_NAME "SeEncontre"
   DESCRIPTION "Ferramenta educacional de escalas e braço de instrumentos"
   IS_SYNTH TRUE
   NEEDS_MIDI_INPUT FALSE
@@ -32,7 +32,7 @@ juce_add_plugin(${JOJO_PLUGIN_TARGET}
   COPY_PLUGIN_AFTER_BUILD FALSE
   VST3_CATEGORIES Instrument Fx)
 
-juce_add_binary_data(OndeEQueEuToFrontend SOURCES ${JOJO_FRONTEND_ASSETS})
+juce_add_binary_data(SeEncontreFrontend SOURCES ${JOJO_FRONTEND_ASSETS})
 target_sources(${JOJO_PLUGIN_TARGET} PRIVATE plugin/PluginProcessor.h plugin/PluginProcessor.cpp plugin/PluginEditor.h plugin/PluginEditor.cpp)
 target_compile_definitions(${JOJO_PLUGIN_TARGET} PUBLIC JUCE_WEB_BROWSER=1 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0 JOJO_USE_VITE_DEV_SERVER=$<BOOL:${JOJO_USE_VITE_DEV_SERVER}>)
-target_link_libraries(${JOJO_PLUGIN_TARGET} PRIVATE OndeEQueEuToFrontend juce::juce_audio_utils juce::juce_gui_extra PUBLIC juce::juce_recommended_config_flags juce::juce_recommended_lto_flags juce::juce_recommended_warning_flags)
+target_link_libraries(${JOJO_PLUGIN_TARGET} PRIVATE SeEncontreFrontend juce::juce_audio_utils juce::juce_gui_extra PUBLIC juce::juce_recommended_config_flags juce::juce_recommended_lto_flags juce::juce_recommended_warning_flags)

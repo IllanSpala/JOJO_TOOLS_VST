@@ -4,18 +4,18 @@
 #include <atomic>
 #include <juce_audio_processors/juce_audio_processors.h>
 
-class OndeEQueEuToAudioProcessor final : public juce::AudioProcessor
+class SeEncontreAudioProcessor final : public juce::AudioProcessor
 {
 public:
-    OndeEQueEuToAudioProcessor();
-    ~OndeEQueEuToAudioProcessor() override = default;
+    SeEncontreAudioProcessor();
+    ~SeEncontreAudioProcessor() override = default;
     void prepareToPlay (double, int) override;
     void releaseResources() override;
     bool isBusesLayoutSupported (const BusesLayout&) const override;
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override { return true; }
-    const juce::String getName() const override { return "AINDA ESTOU POR AI"; }
+    const juce::String getName() const override { return "SeEncontre"; }
     bool acceptsMidi() const override { return false; }
     bool producesMidi() const override { return false; }
     bool isMidiEffect() const override { return false; }
@@ -50,5 +50,5 @@ private:
     std::atomic<unsigned> noteGeneration { 0 };
     std::atomic<double> currentSampleRate { 44100.0 };
     juce::LinearSmoothedValue<float> mainGain;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OndeEQueEuToAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SeEncontreAudioProcessor)
 };

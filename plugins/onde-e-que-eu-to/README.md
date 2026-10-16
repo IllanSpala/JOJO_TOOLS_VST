@@ -1,6 +1,6 @@
-# AINDA ESTOU POR AI
+# SeEncontre
 
-Primeiro plugin da suíte JOJO-TOOLS. O header da interface identifica a função **MÁQUINA DE ESCALAS**; o modal e os metadados nativos identificam o produto **AINDA ESTOU POR AI**.
+Primeiro plugin da suíte JOJO-TOOLS. O header da interface identifica a função **MÁQUINA DE ESCALAS**; o modal e os metadados nativos identificam o produto **SeEncontre**.
 
 ## Desenvolvimento web
 
@@ -15,13 +15,13 @@ npm run dev
 
 Após `./scripts/build-linux.sh` na raiz:
 
-- Standalone: `build/linux/plugins/onde-e-que-eu-to/OndeEQueEuTo_artefacts/Debug/Standalone/OndeEQueEuTo`
-- VST3: `build/linux/plugins/onde-e-que-eu-to/OndeEQueEuTo_artefacts/Debug/VST3/OndeEQueEuTo.vst3`
+- Standalone: `build/linux/plugins/onde-e-que-eu-to/SeEncontre_artefacts/Debug/Standalone/SeEncontre`
+- VST3: `build/linux/plugins/onde-e-que-eu-to/SeEncontre_artefacts/Debug/VST3/SeEncontre.vst3`
 
 O build normal é offline em runtime: a interface Vite é incorporada ao binário. Para desenvolvimento com hot reload, configure outra pasta de build com `-DJOJO_USE_VITE_DEV_SERVER=ON` e mantenha `npm run dev` ativo.
 
 ## REAPER Linux
 
-Execute `./scripts/install-linux-vst3.sh`. No REAPER, adicione `~/.vst3` aos caminhos VST se necessário e faça um rescan. Procure por **AINDA ESTOU POR AI**, fabricante **JOJO-TOOLS**. Teste áudio mono/estéreo, automação de `Output` e `Notes Output`, salvamento da sessão e reprodução das referências.
+Execute `./scripts/install-linux-vst3.sh`. No REAPER, adicione `~/.vst3` aos caminhos VST se necessário e faça um rescan. Procure por **SeEncontre**, fabricante **JOJO-TOOLS**. Teste áudio mono/estéreo, automação de `Output` e `Notes Output`, salvamento da sessão e reprodução das referências.
 
 O ganho positivo pode clipar; use material com headroom. Não há limiter por decisão de escopo.

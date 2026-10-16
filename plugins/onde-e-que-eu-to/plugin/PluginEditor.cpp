@@ -15,7 +15,7 @@ juce::String mimeFor (const juce::String& path)
 }
 }
 
-OndeEQueEuToAudioProcessorEditor::OndeEQueEuToAudioProcessorEditor (OndeEQueEuToAudioProcessor& owner)
+SeEncontreAudioProcessorEditor::SeEncontreAudioProcessorEditor (SeEncontreAudioProcessor& owner)
     : AudioProcessorEditor (owner), processor (owner), browser (makeBrowserOptions())
 {
     addAndMakeVisible (browser);
@@ -30,12 +30,12 @@ OndeEQueEuToAudioProcessorEditor::OndeEQueEuToAudioProcessorEditor (OndeEQueEuTo
     startTimerHz (20);
 }
 
-juce::WebBrowserComponent::Options OndeEQueEuToAudioProcessorEditor::makeBrowserOptions()
+juce::WebBrowserComponent::Options SeEncontreAudioProcessorEditor::makeBrowserOptions()
 {
     auto options = juce::WebBrowserComponent::Options{}
         .withNativeIntegrationEnabled()
-        .withInitialisationData (OndeEQueEuToAudioProcessor::notesOutputGainId, processor.parameters.getRawParameterValue (OndeEQueEuToAudioProcessor::notesOutputGainId)->load())
-        .withInitialisationData (OndeEQueEuToAudioProcessor::mainOutputGainId, processor.parameters.getRawParameterValue (OndeEQueEuToAudioProcessor::mainOutputGainId)->load())
+        .withInitialisationData (SeEncontreAudioProcessor::notesOutputGainId, processor.parameters.getRawParameterValue (SeEncontreAudioProcessor::notesOutputGainId)->load())
+        .withInitialisationData (SeEncontreAudioProcessor::mainOutputGainId, processor.parameters.getRawParameterValue (SeEncontreAudioProcessor::mainOutputGainId)->load())
         .withEventListener ("setParameter", [this] (const juce::var& payload) { setParameterFromWeb (payload); })
         .withEventListener ("playNote", [this] (const juce::var& payload)
         {
@@ -64,7 +64,7 @@ juce::WebBrowserComponent::Options OndeEQueEuToAudioProcessorEditor::makeBrowser
     return options;
 }
 
-void OndeEQueEuToAudioProcessorEditor::setParameterFromWeb (const juce::var& payload)
+void SeEncontreAudioProcessorEditor::setParameterFromWeb (const juce::var& payload)
 {
     auto* object = payload.getDynamicObject();
     if (object == nullptr) return;
@@ -76,7 +76,7 @@ void OndeEQueEuToAudioProcessorEditor::setParameterFromWeb (const juce::var& pay
     parameter->endChangeGesture();
 }
 
-std::optional<OndeEQueEuToAudioProcessorEditor::Resource> OndeEQueEuToAudioProcessorEditor::getResource (const juce::String& requestedUrl) const
+std::optional<SeEncontreAudioProcessorEditor::Resource> SeEncontreAudioProcessorEditor::getResource (const juce::String& requestedUrl) const
 {
     auto path = requestedUrl.upToFirstOccurrenceOf ("?", false, false);
     if (path.isEmpty() || path == "/") path = "index.html";
@@ -95,10 +95,10 @@ std::optional<OndeEQueEuToAudioProcessorEditor::Resource> OndeEQueEuToAudioProce
     return std::nullopt;
 }
 
-void OndeEQueEuToAudioProcessorEditor::timerCallback()
+void SeEncontreAudioProcessorEditor::timerCallback()
 {
-    const auto notes = processor.parameters.getRawParameterValue (OndeEQueEuToAudioProcessor::notesOutputGainId)->load();
-    const auto output = processor.parameters.getRawParameterValue (OndeEQueEuToAudioProcessor::mainOutputGainId)->load();
+    const auto notes = processor.parameters.getRawParameterValue (SeEncontreAudioProcessor::notesOutputGainId)->load();
+    const auto output = processor.parameters.getRawParameterValue (SeEncontreAudioProcessor::mainOutputGainId)->load();
     const auto emit = [this] (const char* id, float value)
     {
         auto* object = new juce::DynamicObject();
@@ -106,8 +106,8 @@ void OndeEQueEuToAudioProcessorEditor::timerCallback()
         object->setProperty ("value", value);
         browser.emitEventIfBrowserIsVisible ("parameterChanged", juce::var (object));
     };
-    if (notes != lastNotesGain) { lastNotesGain = notes; emit (OndeEQueEuToAudioProcessor::notesOutputGainId, notes); }
-    if (output != lastMainGain) { lastMainGain = output; emit (OndeEQueEuToAudioProcessor::mainOutputGainId, output); }
+    if (notes != lastNotesGain) { lastNotesGain = notes; emit (SeEncontreAudioProcessor::notesOutputGainId, notes); }
+    if (output != lastMainGain) { lastMainGain = output; emit (SeEncontreAudioProcessor::mainOutputGainId, output); }
 }
 
-void OndeEQueEuToAudioProcessorEditor::resized() { browser.setBounds (getLocalBounds()); }
+void SeEncontreAudioProcessorEditor::resized() { browser.setBounds (getLocalBounds()); }
