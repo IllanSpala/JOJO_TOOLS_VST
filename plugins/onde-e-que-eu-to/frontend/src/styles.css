@@ -151,3 +151,13 @@ select option{background:#171717!important;color:#f3f1ed!important}
 .knob i:after{transition:transform .08s linear}
 .knob.dragging i{filter:brightness(1.22);box-shadow:0 0 0 2px #d6b89c99,0 5px 14px #000,0 0 16px #d6b89c38;transform:scale(1.035)}
 .knob.dragging i:after{transition:none}
+
+/* Pin CHUG to the editor corner, above the help footer. */
+.bottom-row .chug{position:absolute;right:18px;bottom:calc(var(--footer-height) + 12px)}
+.ui-scale-control{width:100%;display:flex;flex-direction:column;gap:12px;margin:0;min-width:0}
+.ui-scale-control input[type=range]{width:calc(100% - 32px);margin:8px 16px 0;flex:none}
+.scale-marks{display:flex;justify-content:space-between;gap:0}
+.scale-marks button{padding:4px 0;width:32px;border:0;background:none;color:#aaa;font-size:10px;cursor:pointer;white-space:nowrap}
+.scale-marks button.selected{color:var(--accent-b);font-weight:700}
+.scale-apply{align-self:flex-end;padding:8px 18px;border:1px solid #ffffff30;border-radius:7px;background:var(--accent-b);color:#28221e;cursor:pointer;font-size:12px}
+.scale-apply:disabled{opacity:.45;cursor:default}
