@@ -88,6 +88,69 @@ JOJO_VST3_DIR=/caminho/desejado ./scripts/install-linux-vst3.sh
 
 O bundle completo deve ser copiado, não apenas o `.so` interno. Não é necessário `sudo` para instalar em `~/.vst3/`.
 
+### Instalação completa no Linux — do clone ao REAPER
+
+> **Atenção:** executar `./scripts/install-linux-vst3.sh` imediatamente após clonar o repositório resulta em `Bundle não encontrado`. O instalador **não compila** o projeto: ele apenas copia o VST3 já gerado pelo script de build. A ordem correta é **dependências → frontend → compilação → instalação → varredura no REAPER**.
+
+Em distribuições Debian/Ubuntu e derivadas, instale as dependências nativas:
+
+```bash
+sudo apt update
+sudo apt install -y \
+  build-essential cmake ninja-build git \
+  nodejs npm pkg-config \
+  libasound2-dev libjack-jackd2-dev \
+  libgtk-3-dev libwebkit2gtk-4.1-dev \
+  libfreetype-dev libfontconfig1-dev \
+  libx11-dev libxext-dev libxinerama-dev \
+  libxrandr-dev libxcursor-dev
+```
+
+O projeto requer **CMake 3.22+**, um compilador C++20 e um Node.js compatível com as dependências do frontend. Confirme as versões com `cmake --version` e `node --version`; se a versão de Node.js dos repositórios da sua distribuição for antiga, instale uma versão LTS compatível.
+
+Na **raiz do repositório**, prepare o frontend React/Vite e compile os artefatos Linux:
+
+```bash
+cd ~/Documentos/Coding/JOJO_TOOLS_VST
+cd plugins/onde-e-que-eu-to/frontend
+npm ci
+cd ../../..
+./scripts/build-linux.sh
+```
+
+> **Nota:** `~/Documentos/Coding/JOJO_TOOLS_VST` é o caminho utilizado nos exemplos. Se você clonou o projeto em outro lugar, entre na pasta correspondente antes de executar os comandos. O script utiliza, por padrão, até quatro jobs de compilação; ajuste com `JOJO_BUILD_JOBS=2 ./scripts/build-linux.sh` se necessário.
+
+Quando o build finalizar sem erros, instale o bundle VST3 **sem sudo**:
+
+```bash
+./scripts/install-linux-vst3.sh
+```
+
+Confirme a instalação e teste também a versão Standalone:
+
+```bash
+ls ~/.vst3/SeEncontre.vst3/Contents/x86_64-linux/
+./scripts/run-standalone.sh
+```
+
+O primeiro comando deve encontrar o binário `SeEncontre.so`. O Standalone requer sessão gráfica Linux. Para carregar o plugin no REAPER, abra **Options → Preferences → Plug-ins → VST**, confirme que `~/.vst3` está entre os diretórios examinados, execute **Re-scan** (ou uma varredura completa) e procure por **SeEncontre**.
+
+#### Solução de problemas: `Bundle não encontrado`
+
+A mensagem abaixo indica que o instalador não encontrou o diretório de saída esperado:
+
+```text
+Bundle não encontrado: .../build/linux/plugins/onde-e-que-eu-to/SeEncontre_artefacts/Debug/VST3/SeEncontre.vst3
+```
+
+1. Execute `./scripts/build-linux.sh` na raiz do projeto e confira se terminou com `Build concluído para onde-e-que-eu-to.`.
+2. Se aparecer `Ferramenta ausente: cmake`, `ninja` ou `npm`, instale o programa indicado e repita a compilação.
+3. Se houver erro de dependências JavaScript, execute `npm ci` em `plugins/onde-e-que-eu-to/frontend` e repita o build.
+4. Verifique os artefatos com `find build/linux -name 'SeEncontre.vst3' -print`. O instalador espera especificamente o bundle **Debug** no caminho indicado; builds `Release` ou outros diretórios não são instalados automaticamente por esse script.
+5. Se o build falhar, corrija o **primeiro erro** da saída do CMake/compilador, em vez de executar repetidamente o instalador.
+
+Não copie apenas o `.so`: preserve toda a pasta `SeEncontre.vst3`. Não utilize `sudo` com o instalador padrão.
+
 ### Compilar no Linux (desenvolvedores)
 
 Ambiente de referência: Debian 13/Trixie ou compatível. Requer CMake 3.22+, Ninja, compilador C++20, Git, Node.js/npm, bibliotecas de desenvolvimento ALSA, JACK, GTK 3, WebKit2GTK 4.1, FreeType, Fontconfig e X11 utilizadas pelo JUCE.
